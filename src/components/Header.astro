@@ -1,0 +1,89 @@
+---
+import { kUrlBase, kSiteLogo } from "$consts";
+
+import { ThemeToggle } from "@myriaddreamin/tylant-theme-toggle";
+
+import HeaderLink from "./HeaderLink.astro";
+
+interface Props {
+  articleId?: string;
+}
+
+const { articleId } = Astro.props;
+---
+
+<header>
+  <nav>
+    <h2 class="logo"><a href={`${kUrlBase}/`}>{kSiteLogo}</a></h2>
+    <div class="internal-links">
+      <HeaderLink href={`${kUrlBase}/`}>Home</HeaderLink>
+      <HeaderLink href={`${kUrlBase}/article`}>Posts</HeaderLink>
+      <HeaderLink href={`${kUrlBase}/about`}>About</HeaderLink>
+    </div>
+    <div class="social-links">
+      <span style="width: 2em;" aria-hidden="true">&nbsp;</span>
+      <ThemeToggle />
+    </div>
+  </nav>
+</header>
+<style>
+  .logo {
+    font-weight: 700;
+    font-style: italic;
+  }
+  header {
+    margin: 0;
+    padding: 0 1em;
+    background: var(--nav-bg-color);
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+  }
+  h2 {
+    margin: 0;
+    font-size: 1em;
+  }
+
+  h2 a,
+  h2 a.active {
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: min(56rem, calc(100% - 2em));
+    margin: auto;
+  }
+  nav a {
+    padding: 1em 0.5em;
+    border-bottom: 4px solid transparent;
+    text-decoration: none;
+  }
+  nav a.active {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+  }
+  .social-links,
+  .social-links a {
+    display: flex;
+  }
+  @media (max-width: 680px) {
+    .logo,
+    .social-links a.ls-icon {
+      display: none;
+    }
+  }
+  @media (max-width: 400px) {
+    nav {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 370px) {
+    .internal-links {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .internal-links a {
+      flex: 1 0 70px;
+    }
+  }
+</style>
