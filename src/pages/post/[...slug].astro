@@ -1,0 +1,23 @@
+---
+export async function getStaticPaths() {
+  const files = import.meta.glob('/content/article/**/*.{typ,md,mdx}');
+
+  const paths = Object.keys(files).map((filepath) => {
+    const slug = filepath
+      .replace('/content/article/', '')
+      .replace(/\.[^/.]+$/, "");
+
+    return {
+      params: { slug }
+    };
+  });
+
+  console.log(">> GENERATED REDIRECT ROUTES:", paths.map(p => p.params.slug));
+  return paths;
+}
+
+const { slug } = Astro.params;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+return Astro.redirect(`${baseUrl}/article/${slug}`, 301);
+---
